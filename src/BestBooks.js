@@ -1,29 +1,16 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+
 import { Carousel, Toast } from 'react-bootstrap';
 
 
-class BestBooks extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      booksData: [],
-    }
-  }
-  componentDidMount = async () => {
-    let data = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/books`);
-    this.setState({
-      booksData: data.data
-    })
-    console.log(this.state.booksData);
-  }
+class BestBooks extends Component { 
 
   render() {
     return (
       <>
         <Carousel>
-          {this.state.booksData.length > 0 ? this.state.booksData.map((element) => {
-            return <Carousel.Item>
+          {this.props.booksData.length > 0 ? this.props.booksData.map((element,idx) => {
+            return <Carousel.Item key={`${idx}`}>
               <img style={{width:"300px", height:"600px"} }
                 className="d-block w-100"
                 src={element.image}

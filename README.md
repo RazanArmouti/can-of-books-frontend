@@ -59,6 +59,21 @@ Finish time:
 Actual time needed to complete:
 7 hours
 
+Name of feature: lab12
+2. CREATE and DELETE of CRUD
+
+Estimate of time needed to complete:
+5 hours
+
+Start time: 
+ 5PM
+
+Finish time:
+2:00 am
+
+Actual time needed to complete:
+9 hours
+
 
 
 
