@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 
-export class NAV extends Component {
+ class NAV extends Component {
     render() {
         return (
 

@@ -7,6 +7,7 @@ import Profile from './components/Profile';
 import BookFormModal from './components/BookFormModal';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
+import BookUpdateModal from './components/BookUpdateModal';
 
 import {
   BrowserRouter as Router,
@@ -20,14 +21,13 @@ class App extends Component {
     super(props);
     this.state = {
       booksData: [],
-      owner: {
-        ownerName: "Razan Armouti",
-        email: "admin@gmail.com"
-      },
       title: '',
       description: '',
       image: '',
-      showModal: false
+      email:'',
+      showModal: false,
+      showUpdateModal: false,
+      bookId:''
 
     }
   }
@@ -46,29 +46,51 @@ class App extends Component {
     console.log(this.state.showModal)
 
   }
+  handleUpdateBook = () => {
+    this.setState({
+      showUpdateModal: true
+
+    })
+    console.log(this.state.showUpdateModal)
+    console.log(this.state.bookId)
+
+
+  }
   handleClose = () => {
     this.setState({
-      showModal: false
+      showModal: false,
+      showUpdateModal:false
     })
   }
-  handleOpen = (image, title, description) => {
+  handleOpen = (image, title, description,email) => {
     this.setState({
       showModal: true,
+      showUpdateModal: true,
       image: image,
       title: title,
-      description: description
+      description: description,
+      email:email
 
     })
   }
 
-  deleteBook = async (bookID) => {
-    // let catsInfo = await axios.delete(`${process.env.REACT_APP_SERVER}/deleteCat?catID=${catID}`)
-    let books = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/books/${bookID}?ownerName=${this.state.owner.email}`);
+  handleDelete=(id)=>{
     this.setState({
-      booksData: books.data
+      bookId:id
     })
+        let config={
+        method:"DELETE",
+        baseURL:`${process.env.REACT_APP_BACKEND_URL}`,
+        url:`/delete-books/${this.state.bookId}`,
 
-  }
+    }
+
+    axios(config).then(response=>{
+      this.setState({
+        booksData:response.data
+      })
+    })
+}
 
   render() {
     return (
@@ -86,16 +108,18 @@ class App extends Component {
         </Router>
         <br />
 
-        <BestBooks booksData={this.state.booksData} />
+        <BestBooks booksData={this.state.booksData} bookId={this.state.bookId}/>
 
         <br />
         <Button variant="primary" onClick={this.handleBookInput} >Add New Book</Button>
-
-
         {
-
           this.state.showModal ? <BookFormModal showModal={this.state.showModal} handleOpen={this.handleOpen} handleClose={this.handleClose} /> : ''
+        }
 
+        <br/>
+        <Button variant="success" onClick={this.handleUpdateBook}>Update</Button>
+        {
+          this.state.showUpdateModal ? <BookUpdateModal bookId={this.state.bookId} showUpdateModal={this.state.showUpdateModal} handleOpen={this.handleOpen} handleClose={this.handleClose} /> : ''
         }
 
         <br />
