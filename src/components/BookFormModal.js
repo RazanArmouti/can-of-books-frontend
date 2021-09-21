@@ -8,7 +8,8 @@ require('dotenv').config();
         this.state = {
             image: '',
             title: '',
-            description: ''
+            description: '',
+            email:''
         }
         console.log( this.props.showModal)
     }
@@ -23,7 +24,8 @@ require('dotenv').config();
           data:{
             image:this.state.image,
             title:this.state.title,
-            description:this.state.description
+            description:this.state.description,
+            email:this.state.email
           }
         }
         axios(config).then(response=>{
@@ -31,6 +33,7 @@ require('dotenv').config();
                 booksData: response.data
             })
           })
+          window.location.reload(true);
           console.log(this.state.booksData);
     }
     handleNewtitle = e => {   
@@ -57,6 +60,31 @@ require('dotenv').config();
         });
         console.log(this.state.image)
     }
+    handleNewemail = e => {
+        console.log(e.target.value)  
+        this.setState({
+            image: e.target.value,
+           
+        });
+        console.log(this.state.email)
+    }
+
+    handleDelete=(id)=>{
+        let bookId=id;
+        let config={
+            method:"DELETE",
+            baseURL:`${process.env.REACT_APP_BACKEND_URL}`,
+            url:`/delete-books/${bookId}`,
+    
+        }
+    
+        axios(config).then(response=>{
+          this.setState({
+            booksData:response.data
+          })
+        })
+    }
+
 
     render() {
         return (
@@ -70,6 +98,7 @@ require('dotenv').config();
                     <form >                   
                         <input id="txtTitle" type="text" placeholder="new book title" style={{width:"470px", height:"100px"}} onChange={this.handleNewtitle}/> <br/>
                         <input type="txtDescription" placeholder="new book description" style={{width:"470px", height:"100px"}} onChange={this.handleNewdesc}/> <br/>
+                        <input type="txtemail" placeholder="new email address" style={{width:"470px", height:"100px"}} onChange={this.handleNewemail}/> <br/>
                         <input type="txtImageUrl" placeholder="new book image-url" style={{width:"470px", height:"100px"}} onChange={this.handleNewimg}/> <br/>                       
 
                     </form>
