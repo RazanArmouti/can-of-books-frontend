@@ -7,8 +7,6 @@ import Profile from './components/Profile';
 import BookFormModal from './components/BookFormModal';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
-import BookUpdateModal from './components/BookUpdateModal';
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -43,19 +41,10 @@ class App extends Component {
       showModal: true
 
     })
-    console.log(this.state.showModal)
+   
 
   }
-  handleUpdateBook = () => {
-    this.setState({
-      showUpdateModal: true
-
-    })
-    console.log(this.state.showUpdateModal)
-    console.log(this.state.bookId)
-
-
-  }
+  
   handleClose = () => {
     this.setState({
       showModal: false,
@@ -74,23 +63,7 @@ class App extends Component {
     })
   }
 
-  handleDelete=(id)=>{
-    this.setState({
-      bookId:id
-    })
-        let config={
-        method:"DELETE",
-        baseURL:`${process.env.REACT_APP_BACKEND_URL}`,
-        url:`/delete-books/${this.state.bookId}`,
-
-    }
-
-    axios(config).then(response=>{
-      this.setState({
-        booksData:response.data
-      })
-    })
-}
+ 
 
   render() {
     return (
@@ -115,16 +88,7 @@ class App extends Component {
         {
           this.state.showModal ? <BookFormModal showModal={this.state.showModal} handleOpen={this.handleOpen} handleClose={this.handleClose} /> : ''
         }
-
-        <br/>
-        <Button variant="success" onClick={this.handleUpdateBook}>Update</Button>
-        {
-          this.state.showUpdateModal ? <BookUpdateModal bookId={this.state.bookId} showUpdateModal={this.state.showUpdateModal} handleOpen={this.handleOpen} handleClose={this.handleClose} /> : ''
-        }
-
-        <br />
-        <Button variant="danger" onClick={this.deleteBook}>Delete Book</Button>
-
+      
       </div >
     )
   }
