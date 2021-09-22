@@ -15,8 +15,8 @@ require('dotenv').config();
     }
     getHandleOpen = () => {
        // this.handleNewBook
-       console.log(this.state.image, this.state.title, this.state.description);
-        this.props.handleOpen(this.state.image, this.state.title, this.state.description)       
+       console.log(this.state.image, this.state.title, this.state.description,this.state.email);
+        this.props.handleOpen(this.state.image, this.state.title, this.state.description,this.state.email)         
         let config={
           method:"POST",
           baseURL:`${process.env.REACT_APP_BACKEND_URL}`,
@@ -69,21 +69,7 @@ require('dotenv').config();
         console.log(this.state.email)
     }
 
-    handleDelete=(id)=>{
-        let bookId=id;
-        let config={
-            method:"DELETE",
-            baseURL:`${process.env.REACT_APP_BACKEND_URL}`,
-            url:`/delete-books/${bookId}`,
-    
-        }
-    
-        axios(config).then(response=>{
-          this.setState({
-            booksData:response.data
-          })
-        })
-    }
+   
 
 
     render() {

@@ -10,22 +10,45 @@ class BookUpdateModal extends Component {
             title: '',
             description: '',
             email: '',
-            
+            booksData: []
+
         }
-        console.log(this.props.showUpdateModal)
-        console.log(this.props.bookId)
+
     }
 
-    
+    componentDidMount = async () => {
+        let config = {
+            method: "get",
+            baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
+            url: `/get-book?id=${this.props.bookId}`,
+
+        }
+
+        axios(config).then(response => {
+
+            this.setState({
+                booksData: response.data,
+                image: response.data.image,
+                title: response.data.title,
+                description: response.data.description,
+                email: response.data.email
+            })
+
+        })
+
+
+
+    }
 
 
     handleUpdateForm = () => {
-        console.log(this.state.image, this.state.title, this.state.description, this.state.email);
-        this.props.handleOpen(this.state.image, this.state.title, this.state.description, this.state.email)
+
+        console.log("inside update", this.state.image, this.state.title, this.state.description, this.state.email, this.props.bookId);
+        this.props.handleOpen(this.state.image, this.state.title, this.state.description, this.state.email);
         let config = {
             method: "PUT",
             baseURL: process.env.REACT_APP_BACKEND_URL,
-            url: `/update-student/${this.state.bookId}`,
+            url: `/update-book/${this.props.bookId}`,
             data: {
                 image: this.state.image,
                 title: this.state.title,
@@ -37,42 +60,40 @@ class BookUpdateModal extends Component {
             this.setState({
                 booksData: res.data
             })
+           // console.log(this.state.booksData);
         });
         window.location.reload(true);
-        console.log(this.state.booksData);
+
     }
 
     handleNewtitle = e => {
-        console.log(e.target.value)
         this.setState({
             title: e.target.value,
 
         });
-
-        console.log(this.state.title)
     }
     handleNewdesc = e => {
-        console.log(e.target.value)
+      
         this.setState({
             description: e.target.value
         });
-        console.log(this.state.description)
+       
     }
     handleNewimg = e => {
-        console.log(e.target.value)
+     
         this.setState({
             image: e.target.value,
 
         });
-        console.log(this.state.image)
+     
     }
     handleNewemail = e => {
-        console.log(e.target.value)
+       
         this.setState({
-            image: e.target.value,
+            email: e.target.value,
 
         });
-        console.log(this.state.email)
+      
     }
 
 
@@ -88,22 +109,20 @@ class BookUpdateModal extends Component {
 
                 <Modal.Body>
                     <form >
-                        <input id="txtTitle" type="text" placeholder="new book title" style={{ width: "470px", height: "100px" }} onChange={this.handleNewtitle} /> <br />
-                        <input type="txtDescription" placeholder="new book description" style={{ width: "470px", height: "100px" }} onChange={this.handleNewdesc} /> <br />
-                        <input type="txtemail" placeholder="new email address" style={{ width: "470px", height: "100px" }} onChange={this.handleNewemail} /> <br />
-                        <input type="txtImageUrl" placeholder="new book image-url" style={{ width: "470px", height: "100px" }} onChange={this.handleNewimg} /> <br />
-
+                        <input id="txtTitle" type="text" style={{ width: "470px", height: "100px" }} value={this.state.title} onChange={this.handleNewtitle} /> <br />
+                        <input type="txtDescription" style={{ width: "470px", height: "100px" }} value={this.state.description} onChange={this.handleNewdesc} /> <br />
+                        <input type="txtemail" style={{ width: "470px", height: "100px" }} value={this.state.email} onChange={this.handleNewemail} /> <br />
+                        <input type="txtImageUrl" style={{ width: "470px", height: "100px" }} value={this.state.image} onChange={this.handleNewimg} /> <br />
                     </form>
                 </Modal.Body>
 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.props.handleClose}>Close</Button>
-                    <Button variant="primary"  >Update Book Info</Button>
-                    {/* onClick={this.handleUpdateForm} */}
+                    <Button variant="primary" onClick={this.handleUpdateForm}>Update Book Info</Button>
+                  
                 </Modal.Footer>
             </Modal>
-
-
+        
         )
     }
 }
