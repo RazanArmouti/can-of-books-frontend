@@ -75,7 +75,7 @@ Actual time needed to complete:
 9 hours
 
 Name of feature: lab13
-2. Update of CRUD
+3. Update of CRUD
 
 Estimate of time needed to complete:
 5 hours
@@ -88,6 +88,21 @@ Finish time:
 
 Actual time needed to complete:
 8 hours
+
+Name of feature: lab14
+4. Auth0
+
+Estimate of time needed to complete:
+5 hours
+
+Start time: 
+ 9:30 PM
+
+Finish time:
+2:00 am
+
+Actual time needed to complete:
+5 hours
 
 # Getting Started with Create React App
 

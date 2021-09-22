@@ -9,6 +9,7 @@ import {Link} from "react-router-dom";
                 <ul>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/Profile">Profile</Link></li>
+                    <li><Link to="/test">Test API</Link></li>
                 </ul>
             </div>
         )
